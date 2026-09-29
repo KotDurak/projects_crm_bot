@@ -11,7 +11,8 @@ module.exports = {
     out_file: "C:\\projects\\projects_crm_bot\\logs\\out.log",
     merge_logs: true,
     env: {
-      PYTHONUNBUFFERED: "1" // Чтобы логи в PM2 обновлялись в реальном времени
+      PYTHONUNBUFFERED: "1",
+      PYTHONIOENCODING: "utf-8"
     }
   }]
 };
