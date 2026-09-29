@@ -1,9 +1,9 @@
 module.exports = {
   apps: [{
     name: "crm-bot",
-    script: "C:\\Users\\maksim\\python\\crm_bot\\venv\\Scripts\\python.exe",
+    script: "C:\\projects_crm_bot\\projects_crm_bot\\venv\\Scripts\\python.exe",
     args: "main.py",
-    cwd: "C:\\Users\\maksim\\python\\crm_bot",
+    cwd: "C:\projects_crm_bot\projects_crm_bot",
     autorestart: true,
     max_restarts: 10,
     min_uptime: "10s",
