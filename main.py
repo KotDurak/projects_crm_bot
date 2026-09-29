@@ -10,15 +10,12 @@ logging.basicConfig(level=logging.INFO, format="%(asctime)s - %(levelname)s - %(
 
 async def main():
     await Database.init()
-    print("✅ База данных инициализирована")
 
     bot = Bot(token=BOT_TOKEN)
     dp = Dispatcher()
 
     dp.include_router(projects.router)
     dp.include_router(sources.router)
-
-    print("🚀 Бот запущен")
     await dp.start_polling(bot)
 
 
