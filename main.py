@@ -6,6 +6,8 @@ from aiogram.filters import Command
 from aiogram.fsm.context import FSMContext
 from aiogram.fsm.state import State, StatesGroup
 from datetime import datetime
+from aiogram.dispatcher.middlewares.base import BaseMiddleware
+from aiogram.types import Update
 
 import config
 import google_sheets
@@ -20,6 +22,15 @@ logging.basicConfig(level=logging.INFO)
 bot = Bot(token=config.BOT_TOKEN)
 dp = Dispatcher()
 
+class AdminAccessMiddleware(BaseMiddleware):
+    """Пропускает к обработчикам только администратора"""
+    async def __call__(self, handler, event: Update, data: dict):
+        user = event.from_user
+        # Если пользователь есть и его ID совпадает с ADMIN_ID — пропускаем
+        if user and user.id == config.ADMIN_ID:
+            return await handler(event, data)
+        # Иначе просто ничего не делаем (бот молча игнорирует чужака)
+        return
 
 # --- FSM СОСТОЯНИЯ ---
 class AddSourceStates(StatesGroup):
@@ -345,6 +356,8 @@ async def handle_pagination(callback: CallbackQuery, callback_data: PaginationCD
 
 async def main():
     print("✅ Бот запущен! Меню и команды настроены.")
+    dp.message.middleware(AdminAccessMiddleware())
+    dp.callback_query.middleware(AdminAccessMiddleware())
     await dp.start_polling(bot)
 
 
