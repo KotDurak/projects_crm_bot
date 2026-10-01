@@ -27,7 +27,7 @@ class AdminAccessMiddleware(BaseMiddleware):
     async def __call__(self, handler, event: Update, data: dict):
         user = event.from_user
         # Если пользователь есть и его ID совпадает с ADMIN_ID — пропускаем
-        if user and user.id == config.ADMIN_ID:
+        if user and user.id in config.ADMIN_IDS:
             return await handler(event, data)
         # Иначе просто ничего не делаем (бот молча игнорирует чужака)
         return
